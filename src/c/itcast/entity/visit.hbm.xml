@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="c.itcast.entity.Visit" table="visit">
+		<id name="vid" column="vid">
+			<generator class="native"></generator>
+		</id>
+		<property name="address" column="address"></property>
+		<property name="content" column="content"></property>
+		<many-to-one class="c.itcast.entity.Customer" column="cvid" name="customer" />
+		<many-to-one class="c.itcast.entity.User" column="uvid" name="user" />
+	</class>
+</hibernate-mapping>

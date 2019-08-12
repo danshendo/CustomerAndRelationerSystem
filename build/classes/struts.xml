@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<package name="user" extends="struts-default" namespace="/">
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="login">/login.jsp</result>
+			<result name="logincheng">/main.jsp</result>
+			<result name="address">/main.jsp</result>
+			<result name="tuichu">/login.jsp</result>
+		</action>
+		<action name="customer_*" class="customerAction" method="{1}">
+			<result name="list">/list.jsp</result>
+			<result name="delete">/list.jsp</result>
+			<result name="modify">/list.jsp</result>
+			<result name="add">/list.jsp</result>
+			<result name="msg1">/msg1.jsp</result>
+			<result name="pageBean">/fenye.jsp</result>
+			<result name="findlike">/list.jsp</result>
+			<result name="find">/list.jsp</result>
+		</action>
+		<action name="relationer_*" class="relationerAction" method="{1}">
+			<result name="findAll">/relationerlist.jsp</result>
+			<result name="delete">/relationerlist.jsp</result>
+			<result name="modify">/relationerlist.jsp</result>
+			<result name="add">/relationerlist.jsp</result>
+			<result name="findrelationer">/findrelationer.jsp</result>
+			<result name="findAllRelationer">/relationerlist.jsp</result>
+		</action>
+		<action name="visit_*" class="visitAction" method="{1}">
+			<result name="findAll">/listvisit.jsp</result>
+			<result name="delete">/listvisit.jsp</result>
+			<result name="modify">/listvisit.jsp</result>
+			<result name="findall">/modifyvisit.jsp</result>
+			<result name="FindAll">/addvisit.jsp</result>
+			<result name="add">/listvisit.jsp</result>
+		</action>
+	</package>
+
+</struts>

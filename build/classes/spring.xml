@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"> 
+        
+        <bean id="userAction" class="ssh_crm8.UserAction" scope="prototype">
+        	<property name="userService" ref="userService"></property>
+        </bean>
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        	<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+			<property name="jdbcUrl" value="jdbc:mysql:///ssh1?characterEncoding=UTF-8"></property>
+			<property name="user" value="root"></property>
+			<property name="password" value=""></property>
+        </bean>
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        	<property name="dataSource" ref="dataSource"></property>
+        	<property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+        </bean>
+        <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        	<property name="sessionFactory" ref="sessionFactory"></property>
+        </bean>
+        <bean id="userdaoImp" class="cc.itcast.Dao.UserDaoImp">
+        	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+        </bean>
+        <bean id="userService" class="cc.itcast.service.UserService">
+        	<property name="userDao" ref="userdaoImp"></property>
+        </bean>
+        <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        	<property name="sessionFactory" ref="sessionFactory"></property>
+        </bean>
+        <tx:annotation-driven transaction-manager="transactionManager" />
+        <bean id="customerAction" class="ssh_crm8.CustomerAction" scope="prototype">
+        	<property name="customerService" ref="customerService"></property>
+        </bean>
+        <bean id="customerService" class="cc.itcast.service.CustomerService">
+        	<property name="customerDao" ref="customerDaoImp"></property>
+        </bean>
+        <bean id="customerDaoImp" class="cc.itcast.Dao.CustomerDaoImp">
+        	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+        </bean>
+        <bean id="relationerAction" class="ssh_crm8.RelationerAction" scope="prototype">
+        	<property name="relationerService" ref="relationerService"></property>
+        	<property name="customerService" ref="customerService"></property>
+        </bean>
+        <bean id="relationerService" class="cc.itcast.service.RelationerService">
+        	<property name="relationerDao" ref="relationerDaoImp"></property>
+        </bean>
+        <bean id="relationerDaoImp" class="cc.itcast.Dao.RelationerDaoImp">
+        	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+        </bean>
+        <bean id="visitDaoImp" class="cc.itcast.Dao.VisitDaoImp">
+        	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+        </bean>
+        <bean id="visitService" class="cc.itcast.service.VisitService">
+        	<property name="visitDao" ref="visitDaoImp"></property>
+        </bean>
+        <bean id="visitAction" class="ssh_crm8.VisitAction" scope="prototype">
+        	<property name="visitService" ref="visitService"></property>
+        	<property name="userService" ref="userService"></property>
+        	<property name="customerService" ref="customerService"></property>
+        </bean>
+</beans>
